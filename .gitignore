@@ -1,11 +1,20 @@
-*.*
+# Ignore everything by default
 *
+
+# Don't ignore directories so Git can traverse submodules
 !*/
-!/nemu/*
-!/nexus-am/*
-!/nanos-lite/*
-!/navy-apps/*
-!Makefile
+
+# Whitelist submodules
+!/nemu/**
+!/abstract-machine/**
+!/nanos-lite/**
+!/navy-apps/**
+!/am-kernels/**
+
+# Keep important project files
 !README.md
 !.gitignore
-!init.sh
+!Justfile
+
+# Ignore generated environment files
+.env/

@@ -1,4 +1,4 @@
-# Justfile - clean, maintainable, readable
+# justfile - clean, maintainable, readable
 # Usage:
 #   just init_all        Initialize all submodules
 #   just load_env        Load environment variables
@@ -7,44 +7,46 @@
 default_branch := "ics2025"
 base_url := "git@github.com:yuioto"
 
+# Default recipe: show all available recipes
+default:
+	@echo "Available recipes:"
+	@just --summary
+
 # --------------------------
 # Core function to init a submodule
 # --------------------------
 # Named parameters:
 #   name   - submodule directory
 #   envvar - environment variable name
-define init_sub_core
-	@submodule_name="{{name}}"
-	@env_var="{{envvar}}"
-	@if [ ! -d "$$submodule_name" ]; then \
-		echo "Adding submodule $$submodule_name..."; \
-		git submodule add -b {{default_branch}} $(base_url)/$$submodule_name.git $$submodule_name; \
-		git submodule update --init --recursive $$submodule_name; \
+init_sub_core name envvar:
+	if [ ! -d "{{name}}" ]; then \
+		echo "Adding submodule {{name}}..."; \
+		git submodule add -b {{default_branch}} {{base_url}}/{{name}}.git {{name}}; \
+		git submodule update --init --recursive {{name}}; \
 	else \
-		echo "$$submodule_name already exists, skipping..."; \
+		echo "{{name}} already exists, skipping..."; \
 	fi
-	@mkdir -p .env
-	@echo "export $$env_var=$$(realpath $$submodule_name)" > .env/$$submodule_name.sh
-	@echo "Environment variable $$env_var written to .env/$$submodule_name.sh"
-end
+	mkdir -p .env
+	echo "export {{envvar}}=$(realpath {{name}})" > .env/{{name}}.sh
+	echo "Environment variable {{envvar}} written to .env/{{name}}.sh"
 
 # --------------------------
 # Submodule wrappers
 # --------------------------
 init_nemu:
-	$(call init_sub_core,name=nemu,envvar=NEMU_HOME)
+	@just init_sub_core nemu NEMU_HOME
 
 init_am:
-	$(call init_sub_core,name=abstract-machine,envvar=AM_HOME)
+	@just init_sub_core abstract-machine AM_HOME
 
 init_navy:
-	$(call init_sub_core,name=navy-apps,envvar=NAVY_HOME)
+	@just init_sub_core navy-apps NAVY_HOME
 
 init_nanos:
-	$(call init_sub_core,name=nanos-lite,envvar=NANOS_HOME)
+	@just init_sub_core nanos-lite NANOS_HOME
 
 init_amk:
-	$(call init_sub_core,name=am-kernels,envvar=AMK_HOME)
+	@just init_sub_core am-kernels AMK_HOME
 
 # --------------------------
 # Initialize all submodules

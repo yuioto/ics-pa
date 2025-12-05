@@ -14,7 +14,7 @@
 # Keep important project files
 !README.md
 !.gitignore
-!Justfile
+!justfile
 
 # Ignore generated environment files
 .env/

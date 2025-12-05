@@ -21,7 +21,7 @@ This repository includes the following subprojects. Some of them may not be full
 
 ## Initialization
 
-This project now uses **git submodules** and a **Justfile** to manage subprojects and environment variables.
+This project now uses **git submodules** and a **justfile** to manage subprojects and environment variables.
 
 1. **Initialize all submodules:**
 
@@ -52,6 +52,6 @@ just init_nemu       # or init_am, init_navy, init_nanos, init_amk
 
 ## Notes
 
-* The `init.sh` script has been replaced by the **Justfile** for better maintainability and submodule management.
-* Forking or using your own repository URLs can be configured by updating the `base_url` in the Justfile.
+* The `init.sh` script has been replaced by the **justfile** for better maintainability and submodule management.
+* Forking or using your own repository URLs can be configured by updating the `base_url` in the justfile.
 * Make sure `git` and `just` are installed before running the initialization commands.

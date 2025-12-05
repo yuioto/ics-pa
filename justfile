@@ -4,8 +4,8 @@
 #   just load_env        Load environment variables
 #   just init_nemu       Initialize only nemu
 
-default_branch := "ics2025"
-base_url := "git@github.com:yuioto"
+# default_branch := "ics2025"
+base_url := "git@github.com:NJU-ProjectN"
 
 # Default recipe: show all available recipes
 default:
@@ -18,10 +18,11 @@ default:
 # Named parameters:
 #   name   - submodule directory
 #   envvar - environment variable name
-init_sub_core name envvar:
+#   branch - git branch to use
+init_sub_core name envvar branch:
 	if [ ! -d "{{name}}" ]; then \
-		echo "Adding submodule {{name}}..."; \
-		git submodule add -b {{default_branch}} {{base_url}}/{{name}}.git {{name}}; \
+		echo "Adding submodule {{name}} (branch {{branch}})..."; \
+		git submodule add --force -b {{branch}} {{base_url}}/{{name}}.git {{name}}; \
 		git submodule update --init --recursive {{name}}; \
 	else \
 		echo "{{name}} already exists, skipping..."; \
@@ -34,19 +35,19 @@ init_sub_core name envvar:
 # Submodule wrappers
 # --------------------------
 init_nemu:
-	@just init_sub_core nemu NEMU_HOME
+	@just init_sub_core nemu NEMU_HOME ics2024
 
 init_am:
-	@just init_sub_core abstract-machine AM_HOME
+	@just init_sub_core abstract-machine AM_HOME ics2024
 
 init_navy:
-	@just init_sub_core navy-apps NAVY_HOME
+	@just init_sub_core navy-apps NAVY_HOME ics2024
 
 init_nanos:
-	@just init_sub_core nanos-lite NANOS_HOME
+	@just init_sub_core nanos-lite NANOS_HOME ics2021
 
 init_amk:
-	@just init_sub_core am-kernels AMK_HOME
+	@just init_sub_core am-kernels AMK_HOME ics2021
 
 # --------------------------
 # Initialize all submodules

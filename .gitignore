@@ -5,11 +5,11 @@
 !*/
 
 # Whitelist submodules
-!/nemu/**
-!/abstract-machine/**
-!/nanos-lite/**
-!/navy-apps/**
-!/am-kernels/**
+!/nemu
+!/abstract-machine
+!/nanos-lite
+!/navy-apps
+!/am-kernels
 
 # Keep important project files
 !README.md

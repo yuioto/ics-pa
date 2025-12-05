@@ -1,7 +1,7 @@
 # justfile - clean, maintainable, readable
 # Usage:
 #   just init_all        Initialize all submodules
-#   just load_env        Load environment variables
+#   just env             Print environment variables (usage: source <(just env))
 #   just init_nemu       Initialize only nemu
 
 # default_branch := "ics2025"
@@ -58,16 +58,14 @@ init_all:
 	@just init_navy
 	@just init_nanos
 	@just init_amk
-	@echo "All submodules initialized. Run 'just load_env' to load environment variables."
+	@echo "All submodules initialized. Run 'source <(just env)' to load environment variables."
 
 # --------------------------
-# Load environment variables
+# Output environment variables
 # --------------------------
-load_env PROJECT_DIR=".": 
+env PROJECT_DIR=".":
 	@if [ -d "{{PROJECT_DIR}}/.env" ]; then \
-		for f in "{{PROJECT_DIR}}/.env"/*.sh; do \
-			[ -f "$$f" ] && echo "Sourcing $$f" && . $$f; \
-		done; \
+		cat "{{PROJECT_DIR}}/.env"/*.sh 2>/dev/null || echo "# No environment variables found."; \
 	else \
-		echo ".env folder not found in {{PROJECT_DIR}}. Run 'just init_all' first."; \
+		echo "# .env folder not found in {{PROJECT_DIR}}. Run 'just init_all' first."; \
 	fi

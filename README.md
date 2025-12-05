@@ -31,14 +31,20 @@ just init_all
 
 1. **Load environment variables for the current shell**
 
-Add the following to your shell startup file (`~/.bashrc` / `~/.zshrc`) to automatically load project environment variables:
+Run the following command to load environment variables into your current shell session:
+
+```bash
+eval $(just env)
+```
+
+Or add it to your shell startup file (`~/.bashrc` / `~/.zshrc`) to load automatically:
 
 ```bash
 # ICS2025 environment variables
-just load_env PROJECT_DIR="$HOME/path/to/project"
+eval $(cd /path/to/ics-pa && just env)
 ```
 
-> This ensures that environment variables like `NEMU_HOME`, `AM_HOME`, etc., are always available in your shell without changing your current working directory.
+> This ensures that environment variables like `NEMU_HOME`, `AM_HOME`, etc., are available.
 
 1. **Initialize a single submodule (optional):**
 
